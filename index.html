@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registration form</title>
+</head>
+
+<body>
+    <style>
+        * {
+            background-color: antiquewhite;
+
+        }
+
+        .container {
+            background-color: white;
+            width: 300px;
+            padding: 10px;
+            height: 350px;
+            border: solid black 1px;
+            border-radius: 5px;
+            position: relative;
+            top: 100px;
+            left: 400px;
+            box-shadow: 5px 5px 10px black;
+        }
+
+        h3 {
+            background-color: white;
+            text-align: center;
+        }
+
+        form,
+        input,
+        label,
+        button {
+            background-color: white;
+            gap: 1px;
+        }
+
+        input {
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        button {
+            background-color: gray;
+            color: white;
+        }
+        button:disabled{
+            cursor: not-allowed;
+        }
+        p{
+                color: green;
+            text-align: center;
+            margin-top: 15px;
+            background-color: white;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            background-color: white;
+            position: relative;
+            bottom: 10px;
+        }
+    </style>
+    <div class="container">
+
+        <h3>REGISTRATION FORM</h3>
+        <form id="form">
+            <label>Name:</label><br>
+            <input type="text" placeholder="Enter your name" style="width: 95%;height:20px ; margin-top: 5px;"
+                id="Name"><br><br>
+            <div class="error" id="nameerror"></div>
+            <label>Email:</label><br>
+            <input type="text" placeholder="Enter your email id" style="width: 95%;height: 20px;margin-top: 5px;"
+                id="email">
+            <br><br>
+            <div class="error" id="emailerror"></div>
+            <label>Password:</label><br>
+            <input type="password" placeholder="Enter your password" style="width:95%;height: 20px;margin-top: 5px;"
+                id="Password">
+            <br><br>
+            <div class="error" id="passworderror"></div>
+            <button style="width: 100%;height: 30px;border-radius: 5px;margin-top: 5px;" type="submit" id="btn" disabled>Submit</button>
+              <p id="success"></p>
+
+        </form>
+
+    </div>
+    <script>
+        let container = document.querySelector(".container")
+        let form = document.getElementById("form")
+        let names = document.getElementById("Name")
+        let email = document.getElementById("email")
+        let password = document.getElementById("Password")
+        let btn = document.getElementById("btn")
+    
+
+        function validatename()
+        { let nameinput = names.value
+        let error = document.getElementById("nameerror")
+            if (nameinput== "") {
+                error.textContent = "*Name should be filled"
+                return false
+            }
+        
+
+            else {
+            error.textContent = ""
+            return true
+                }}
+       
+        function validateemail(){
+            let emailinput = email.value
+            let error = document.getElementById("emailerror")
+            if(emailinput.includes("@") && emailinput.includes(".com")) {
+                error.textContent=""
+                return true
+            }
+            else{
+                error.textContent="*email should not be empty"
+                return false
+            }
+        }
+        function validatepassword(){
+            let passwordinput= password.value
+            let error = document.getElementById("passworderror")
+            if(passwordinput.length < 6){
+                error.textContent = "*Password invlaid"
+                return false
+            }
+            else{
+                error.textContent = "" 
+                return true
+            }
+        }
+        function validateform(){
+            const nameValid = validatename()
+            const emailValid = validateemail()
+            const passwordValid = validatepassword()
+            btn.disabled = !(nameValid && emailValid && passwordValid)
+            
+        }
+        names.addEventListener("input",validateform)
+        email.addEventListener("input",validateform)
+        password.addEventListener("input",validateform)
+
+        form.addEventListener("submit",function(event){
+            event.preventDefault()
+            validateform()
+             if (!btn.disabled) {
+                document.getElementById("success").textContent =
+                    "Registration successful!";
+
+                form.reset();
+                btn.disabled = true;
+            }
+
+        })
+        
+     
+
+
+
+
+    </script>
+</body>
+
+</html>
